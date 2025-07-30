@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مبین ماینر - پیشرفته‌ترین سامانه استخراج هوشمند</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00f5d4;
+            --primary-dark: #00c8961c;
+            --primary-light: rgba(0, 245, 212, 0.2);
+            --dark: #0a0a0a;
+            --darker: #050505;
+            --darkest: #020202;
+            --light: #f5f5f5;
+            --lighter: #ffffff;
+            --gray: #a0a0a0;
+            --gray-light: rgba(160, 160, 160, 0.2);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Vazirmatn', sans-serif;
+        }
+        
+        body {
+            color: var(--light);
+            background-color: var(--darkest);
+            overflow-x: hidden;
+            line-height: 1.8;
+        }
+        
+        /* هدر شیشه‌ای پیشرفته */
+        header {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            padding: 25px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(5, 5, 5, 0.151);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--primary-light);
+            transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        
+        header.scrolled {
+            padding: 15px 7%;
+            background: rgba(2, 2, 2, 0.119);
+            box-shadow: 0 10px 30px rgba(0, 245, 212, 0.1);
+        }
+        
+        /* لوگوی پیشرفته */
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--lighter);
+            text-decoration: none;
+            transition: all 0.4s ease;
+        }
+        
+        .logo-img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        
+        .logo:hover .logo-img {
+            transform: scale(1.5);
+            filter: drop-shadow(0 0 8px var(--primary));
+        }
+        
+        .logo-text span {
+            color: var(--primary);
+            position: relative;
+            display: inline-block;
+            transition: all 0.4s ease;
+            font-family: 'Raleway', sans-serif;
+        }
+        
+        .logo:hover .logo-text span {
+            transform: translateY(-5px);
+            text-shadow: 0 5px 15px rgba(0, 245, 212, 0.5);
+        }
+        
+        /* بخش اصلی با افکت پارالکس */
+        .hero {
+            height: 100vh;
+            min-height: 800px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            padding: 0 7%;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--darkest) 30%, rgba(0, 10, 20, 0.4));
+            z-index: 1;
+        }
+        
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            animation: scaleIn 40s infinite alternate;
+            filter: brightness(0.6) contrast(1.1);
+        }
+        
+        /* ذرات متحرک */
+        .particles {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+        
+        .particle {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: floatParticle linear infinite;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+        }
+        
+        /* تیتر با افکت تایپ ماشین تحریر بهبود یافته */
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 30px;
+            line-height: 1.2;
+            font-weight: 800;
+            background: linear-gradient(to right, var(--lighter), var(--primary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 5px 15px rgba(0, 245, 212, 0.2);
+            position: relative;
+            white-space: normal; /* اجازه شکستن خط */
+            min-height: 4.8rem; /* حفظ ارتفاع برای جلوگیری از جابجایی */
+        }
+        
+        .typing-cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1em;
+            background: var(--primary);
+            animation: blink 0.7s infinite;
+            vertical-align: middle;
+            margin-right: -4px;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 0 }
+            50% { opacity: 1 }
+        }
+        
+        /* دکمه‌های مدرن */
+        .btn-container {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 25px;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 20px 40px;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            border: none;
+        }
+        
+        .btn-call {
+            background-color: var(--primary);
+            color: var(--darkest);
+            box-shadow: 0 0 15px rgba(0, 245, 212, 0.7);
+        }
+        
+        .btn-whatsapp {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--primary);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--primary-light);
+            box-shadow: 0 0 15px rgba(0, 245, 212, 0.3);
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 0;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.15), transparent);
+            transition: all 0.6s ease;
+            z-index: -1;
+        }
+        
+        .btn:hover::before {
+            width: 100%;
+        }
+        
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 245, 212, 0.8);
+        }
+        
+        .btn i {
+            font-size: 1.3em;
+            transition: transform 0.4s ease;
+        }
+        
+        .btn:hover i {
+            transform: scale(1.2);
+        }
+        
+        /* المان‌های دکوراتیو */
+        .decorative-circle {
+            position: absolute;
+            width: 800px;
+            height: 800px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--primary-light) 0%, transparent 70%);
+            z-index: 0;
+            animation: float 12s ease-in-out infinite;
+            filter: blur(80px);
+            opacity: 0.4;
+        }
+        
+        .circle-1 {
+            top: -400px;
+            right: -400px;
+        }
+        
+        .circle-2 {
+            bottom: -300px;
+            left: -300px;
+            animation-delay: 3s;
+            background: radial-gradient(circle, rgba(0, 200, 255, 0.1) 0%, transparent 70%);
+        }
+        
+        /* شبکه خطوط دکوراتیو */
+        .grid-pattern {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(to right, var(--gray-light) 1px, transparent 1px),
+                linear-gradient(to bottom, var(--gray-light) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 0;
+            opacity: 0.15;
+        }
+        
+        /* انیمیشن‌ها */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-30px) rotate(2deg);
+            }
+        }
+        
+        @keyframes scaleIn {
+            from {
+                transform: scale(1);
+            }
+            to {
+                transform: scale(1.1);
+            }
+        }
+        
+        @keyframes floatParticle {
+            to {
+                transform: translateY(-100vh);
+            }
+        }
+        
+        /* ریسپانسیو */
+        @media (max-width: 1200px) {
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .btn {
+                padding: 18px 35px;
+                font-size: 1.1rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                padding: 20px 5%;
+            }
+            
+            .logo {
+                font-size: 1.6rem;
+            }
+            
+            .logo-img {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .hero {
+                padding: 0 5%;
+                text-align: center;
+                min-height: 700px;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+                min-height: 5.2rem; /* تنظیم ارتفاع برای موبایل */
+            }
+            
+            .btn {
+                padding: 16px 30px;
+                font-size: 1rem;
+            }
+            
+            .btn-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 3rem;
+                min-height: 4.5rem;
+            }
+            
+            .btn {
+                padding: 14px 25px;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <a href="#" class="logo">
+            <img src="logo.png" alt="لوگوی مبین ماینر" class="logo-img">
+            <div class="logo-text"><span>Miner</span> Mobin</div>
+        </a>
+    </header>
+    
+    <section class="hero">
+        <img src="bg.avif" alt="Background" class="hero-bg">
+        <div class="grid-pattern"></div>
+        <div class="particles" id="particles"></div>
+        
+        <div class="decorative-circle circle-1"></div>
+        <div class="decorative-circle circle-2"></div>
+        
+        <div class="hero-content">
+            <h1 id="typing-text"><span id="typed-text"></span><span class="typing-cursor"></span></h1>
+            <p>با پیشرفته‌ترین سامانه استخراج هوشمند و تیم متخصص ما، بهره‌وری و سودآوری خود را به سطح جدیدی برسانید</p>
+            
+            <div class="btn-container">
+                <a href="tel:+989022473404" class="btn btn-call">
+                    <i class="fas fa-phone"></i>
+                    تماس فوری
+                </a>
+                <a href="https://wa.me/989022473404" class="btn btn-whatsapp">
+                    <i class="fab fa-whatsapp"></i>
+                    گفتگوی آنلاین
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // ذرات متحرک
+        const particlesContainer = document.getElementById('particles');
+        const particleCount = 30;
+        
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            
+            const size = Math.random() * 5 + 3;
+            const posX = Math.random() * window.innerWidth;
+            const duration = Math.random() * 20 + 10;
+            const delay = Math.random() * 5;
+            
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            particle.style.right = `${posX}px`;
+            particle.style.bottom = '-10px';
+            particle.style.opacity = Math.random() * 0.5 + 0.1;
+            particle.style.animationDuration = `${duration}s`;
+            particle.style.animationDelay = `${delay}s`;
+            
+            particlesContainer.appendChild(particle);
+        }
+        
+        // اسکرول هدر
+        let lastScroll = 0;
+        const header = document.getElementById('header');
+        
+        window.addEventListener('scroll', function() {
+            const currentScroll = window.scrollY;
+            
+            if (currentScroll <= 0) {
+                header.classList.remove('scrolled');
+                return;
+            }
+            
+            if (currentScroll > lastScroll && !header.classList.contains('scrolled')) {
+                header.classList.add('scrolled');
+            } else if (currentScroll < lastScroll && header.classList.contains('scrolled')) {
+                header.classList.remove('scrolled');
+            }
+            
+            lastScroll = currentScroll;
+        });
+
+        // افکت تایپ ماشین تحریر بهبود یافته
+        const text = "انقلاب در صنعت استخراج ارز دیجیتال";
+        const typedText = document.getElementById('typed-text');
+        const cursor = document.querySelector('.typing-cursor');
+        
+        let i = 0;
+        const typingSpeed = 100; // سرعت تایپ (میلی‌ثانیه)
+        
+        function typeWriter() {
+            if (i < text.length) {
+                typedText.textContent += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, typingSpeed);
+            } else {
+                cursor.style.animation = "blink 0.7s infinite";
+            }
+        }
+        
+        // شروع تایپ با تاخیر 1 ثانیه پس از بارگذاری صفحه
+        setTimeout(typeWriter, 1000);
+    </script>
+</body>
+</html>
